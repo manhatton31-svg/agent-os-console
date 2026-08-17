@@ -19,4 +19,5 @@ if [ ! -f "$DEST/AGENTS.project.md" ]; then
   cp "$SRC/AGENTS.project.md" "$DEST/AGENTS.project.md"
 fi
 echo "Agent OS pack 2026-08-17 installed into $DEST"
-echo "Next: load AGENTS.project.md → agent-os → catalog.json and apply defaults."
+echo "Required consumer: manhatton31-svg/arcly-v2 (pull-sync via scripts/sync-agent-os-pack.sh)"
+echo "Next: load AGENTS.md / AGENTS.project.md → agent-os → catalog.json and apply defaults."

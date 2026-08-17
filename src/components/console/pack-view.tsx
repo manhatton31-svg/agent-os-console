@@ -10,6 +10,7 @@ import {
   PACK_RULES,
   PACK_SKILLS,
   PACK_VERSION,
+  PACK_CONSUMERS,
   routingMatchesPack,
 } from "@/lib/os/pack";
 import { useOs } from "@/lib/os/store";
@@ -43,7 +44,8 @@ export function PackView() {
           Catalog defaults drive routing, teammate lanes, and required skills.
           Any later Agent OS session in this workspace loads AGENTS.project.md,
           then the agent-os skill, then applies catalog.json. New workspaces
-          fetch the public boot contract.
+          fetch the public boot contract. Arcly v2 is a required consumer —
+          it pull-syncs this catalog automatically.
         </p>
 
         <ol className="mt-6 grid gap-2">
@@ -108,6 +110,14 @@ export function PackView() {
           ) : (
             <p className="mt-4 text-xs text-ok">Required skills present on the spec.</p>
           )}
+          <ul className="mt-4 grid gap-1.5 border-t border-line pt-3">
+            {PACK_CONSUMERS.map((c) => (
+              <li key={c.repo} className="flex items-center justify-between gap-2 text-xs">
+                <span className="text-muted">{c.name}</span>
+                <span className="font-mono text-faint">{c.sync} · required</span>
+              </li>
+            ))}
+          </ul>
           <div className="mt-4 flex flex-wrap gap-2">
             <Button size="sm" onClick={() => applyPack()} disabled={inForce && missing.length === 0}>
               <RotateCcw className="size-3.5" />

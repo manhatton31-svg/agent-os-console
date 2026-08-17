@@ -42,6 +42,16 @@ Then open only the specialist the mission needs:
 - Execute / courier / archive: `grok-4.5` + `medium` or `low`
 - Self-verify after implementor slices (skeptic in a quarantined thread)
 
+## Required consumers
+
+**Arcly v2 must stay on this pack.** Repo: `manhatton31-svg/arcly-v2`.
+
+After any pack change:
+1. Push this repo (`agent-os-console`)
+2. Arcly pulls automatically (GitHub Action every 6 hours, or `sh scripts/sync-agent-os-pack.sh` in that repo)
+
+Do not ship an Agent OS upgrade that is not on Arcly v2.
+
 ## Later builds
 
 If this skill is missing in a new workspace, fetch and apply:

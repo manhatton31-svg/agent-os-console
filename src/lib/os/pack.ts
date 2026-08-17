@@ -68,6 +68,16 @@ export const PACK_RULES = [
   "Write back decisions. Do not leave state only in the transcript.",
 ] as const;
 
+export const PACK_CONSUMERS = [
+  {
+    name: "arcly-v2",
+    repo: "manhatton31-svg/arcly-v2",
+    required: true,
+    sync: "pull",
+    path: ".grok/skills",
+  },
+] as const;
+
 export const PACK_CANONICAL = {
   github: "https://github.com/manhatton31-svg/agent-os-console",
   rawCatalog:
@@ -89,6 +99,7 @@ export const AGENT_OS_PACK = {
   defaults: { ...PACK_DEFAULTS },
   lanes: PACK_LANES.map((l) => ({ ...l, roles: [...l.roles] })),
   rules: [...PACK_RULES],
+  consumers: PACK_CONSUMERS.map((c) => ({ ...c })),
   canonical: { ...PACK_CANONICAL },
 };
 

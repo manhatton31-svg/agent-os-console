@@ -38,6 +38,15 @@
     "No direct agent-to-agent calls. Subscribe → reason → publish.",
     "Write back decisions. Do not leave state only in the transcript."
   ],
+  "consumers": [
+    {
+      "name": "arcly-v2",
+      "repo": "manhatton31-svg/arcly-v2",
+      "required": true,
+      "sync": "pull",
+      "path": ".grok/skills"
+    }
+  ],
   "canonical": {
     "github": "https://github.com/manhatton31-svg/agent-os-console",
     "catalog": "/agent-os/catalog.json",
