@@ -1,8 +1,18 @@
 # Agent OS Console
 
-## Load first
-- `GROK.md`
-- `.grok/skills/agent-os/SKILL.md`
+## Boot (mandatory — before writing code)
+1. Open `.grok/skills/agent-os/SKILL.md`
+2. Open `.grok/skills/catalog.json`
+3. Apply catalog defaults. Do not invent a second routing, teammate, or context policy.
+4. Load only the specialist skill the current mission needs.
+
+## In force (Monday cycle 2026-08-17)
+- Plan / verify: grok-4.6 · xhigh / high
+- Execute / archive / courier: grok-4.5 · medium / low
+- Compact at 48k (always before 200k)
+- Fleet: Atlas, Forge, Skeptic, Archivist, Courier — isolated VMs
+- Coordination: subscribe → reason → publish
+- AGENTS.md = place (≤100 lines). SKILL.md = how.
 
 ## Stack
 TanStack Start, React 19, Tailwind v4, Zustand, Postgres/PGLite
@@ -13,15 +23,9 @@ TanStack Start, React 19, Tailwind v4, Zustand, Postgres/PGLite
 - Types: `npm run typecheck`
 
 ## Conventions
-- AGENTS.md = place (this file). Skills = how.
-- Scope DB writes by `user_id` via `authMiddleware`.
-- Tokens in `src/styles.css` `@theme`. No ad-hoc hex.
-
-## Constraints
-- Preview on `0.0.0.0:8080`.
-- Auth: Google + X via Grok broker.
-- Compact agent loops at 48k (before 200k price band).
-- Plan/verify: grok-4.6. Execute: cheaper model.
+- Scope DB writes by `user_id` via `authMiddleware`
+- Tokens in `src/styles.css` `@theme`. No ad-hoc hex
+- Pack source of truth: `src/lib/os/pack.ts` + `.grok/skills/catalog.json`
 
 ## Skills
 - `.grok/skills/agent-os/SKILL.md`
@@ -30,3 +34,9 @@ TanStack Start, React 19, Tailwind v4, Zustand, Postgres/PGLite
 - `.grok/skills/context-lifecycle/SKILL.md`
 - `.grok/skills/model-routing/SKILL.md`
 - `.grok/skills/event-bus/SKILL.md`
+
+## Later builds
+Fetch and apply this pack. Do not re-derive it.
+- This workspace: files above
+- GitHub: https://github.com/manhatton31-svg/agent-os-console
+- Live: `/agent-os/catalog.json` and `/agent-os/BOOT.md`

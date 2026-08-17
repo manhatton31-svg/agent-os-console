@@ -8,6 +8,7 @@ import type {
   TeammateStatus,
   Topology,
 } from "./types";
+import { PACK_DEFAULTS, PACK_VERSION } from "./pack";
 
 function pushEvent(
   events: BusEvent[],
@@ -25,9 +26,9 @@ function byRole(mates: Teammate[], role: Teammate["role"]) {
 
 const PLAN_STEPS = [
   "Admitted goal into isolated planner VM.",
-  "Decomposed into thin slices. Routed plan → grok-4.6 xhigh.",
+  `Decomposed into thin slices. Routed plan → ${PACK_DEFAULTS.planModel} ${PACK_DEFAULTS.planEffort}.`,
   "Published work items on the event bus.",
-  "Implementor claimed slice. Exec model on cheap effort.",
+  `Implementor claimed slice. Exec on ${PACK_DEFAULTS.execModel} ${PACK_DEFAULTS.execEffort}.`,
   "Wrote draft output. Context grew; recency window kept last 5 tool calls.",
   "Skeptic opened a quarantine thread for verification.",
   "Self-check against success criteria.",
@@ -161,7 +162,7 @@ export function tickSnapshot(state: OsSnapshot): OsSnapshot {
       "system",
       nextMission.status === "complete" ? "done" : "fail",
       nextMission.status === "complete"
-        ? "Mission complete. Human never left the escalation seat."
+        ? `Mission complete. Pack ${PACK_VERSION} held. Human never left the escalation seat.`
         : "Mission failed verification budget.",
     );
     ctx.notes = ["Mission closed.", ...ctx.notes].slice(0, 12);
@@ -190,7 +191,12 @@ export function startMission(state: OsSnapshot, goal: string, topology: Topology
     verifyPasses: 0,
     verifyFails: 0,
   };
-  const events = pushEvent(state.events, "system", "mission", `Started “${goal}” via ${topology}.`);
+  const events = pushEvent(
+    state.events,
+    "system",
+    "mission",
+    `Started “${goal}” via ${topology}. Pack ${PACK_VERSION} applied.`,
+  );
   const teammates = state.teammates.map((m) => {
     const status: TeammateStatus =
       m.role === "planner" || m.role === "courier" ? "running" : "idle";

@@ -9,6 +9,7 @@ import type {
 import { ROLE_BLURB, ROLE_LABEL } from "./types";
 import { seedSnapshot, makeVmId } from "./defaults";
 import { compactNow, quarantine, startMission, tickSnapshot } from "./engine";
+import { laneForRole, PACK_DEFAULTS, PACK_SKILLS } from "./pack";
 import { uid } from "@/lib/utils";
 
 interface OsStore extends OsSnapshot {
@@ -19,11 +20,17 @@ interface OsStore extends OsSnapshot {
   isolate: () => void;
   setSpec: (spec: SpecDoc) => void;
   setRouting: (patch: Partial<OsSnapshot["routing"]>) => void;
+  applyPack: () => void;
   spawn: (role: TeammateRole, name: string) => void;
   retire: (id: string) => void;
   handoff: (fromId: string, toId: string) => void;
   hydrate: (snap: OsSnapshot) => void;
   reset: () => void;
+}
+
+function mergePackSkills(skills: string[]) {
+  const extra = PACK_SKILLS.filter((s) => s !== "agent-os" && !skills.includes(s));
+  return extra.length ? [...skills, ...extra] : skills;
 }
 
 export const useOs = create<OsStore>()((set, get) => ({
@@ -39,15 +46,37 @@ export const useOs = create<OsStore>()((set, get) => ({
   isolate: () => set(quarantine(get())),
   setSpec: (spec) => set({ spec }),
   setRouting: (patch) => set({ routing: { ...get().routing, ...patch } }),
+  applyPack: () => {
+    const state = get();
+    set({
+      routing: { ...PACK_DEFAULTS },
+      spec: { ...state.spec, skills: mergePackSkills(state.spec.skills) },
+      teammates: state.teammates.map((m) => {
+        const lane = laneForRole(m.role);
+        return { ...m, model: lane.model, effort: lane.effort };
+      }),
+      events: [
+        {
+          id: uid("ev"),
+          at: Date.now(),
+          source: "system",
+          kind: "pack",
+          payload: "Monday-cycle pack reapplied. Routing, lanes, and required skills restored.",
+        },
+        ...state.events,
+      ].slice(0, 80),
+    });
+  },
   spawn: (role, name) => {
+    const lane = laneForRole(role);
     const mate: Teammate = {
       id: uid("tm"),
       name: name.trim() || ROLE_LABEL[role],
       role,
       status: "idle",
       vmId: makeVmId(),
-      model: role === "planner" || role === "skeptic" ? "grok-4.6" : "grok-4.5",
-      effort: role === "planner" ? "xhigh" : role === "skeptic" ? "high" : "medium",
+      model: lane.model,
+      effort: lane.effort,
       contextTokens: 400,
       lastNote: ROLE_BLURB[role],
       createdAt: Date.now(),
@@ -60,7 +89,7 @@ export const useOs = create<OsStore>()((set, get) => ({
           at: Date.now(),
           source: "system",
           kind: "spawn",
-          payload: `${mate.name} provisioned on ${mate.vmId}.`,
+          payload: `${mate.name} provisioned on ${mate.vmId} · ${mate.model} ${mate.effort}.`,
         },
         ...get().events,
       ].slice(0, 80),
@@ -91,6 +120,14 @@ export const useOs = create<OsStore>()((set, get) => ({
       ].slice(0, 80),
     });
   },
-  hydrate: (snap) => set({ ...snap }),
+  hydrate: (snap) =>
+    set({
+      ...snap,
+      routing: { ...PACK_DEFAULTS, ...snap.routing },
+      spec: {
+        ...snap.spec,
+        skills: mergePackSkills(snap.spec.skills ?? []),
+      },
+    }),
   reset: () => set(seedSnapshot()),
 }));

@@ -40,7 +40,8 @@ export function MissionView() {
         <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted">
           Monday cycle is live. Planner reasons on grok-4.6 xhigh. Implementors
           execute cheap. Skeptic verifies in an isolated thread. You only step
-          in when the bus escalates.
+          in when the bus escalates. The pack is in force — later Agent OS
+          builds load it first and apply the same policy.
         </p>
 
         <div className="mt-6 grid gap-3">

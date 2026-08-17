@@ -1,4 +1,5 @@
 import type { SpecDoc } from "./types";
+import { PACK_SKILLS, PACK_VERSION } from "./pack";
 
 export const DEFAULT_SPEC: SpecDoc = {
   project: "Agent OS Console",
@@ -6,15 +7,10 @@ export const DEFAULT_SPEC: SpecDoc = {
   build: "npm run build",
   test: "npm run typecheck",
   conventions:
-    "Keep AGENTS.md under 100 lines. Project facts here; task knowledge in skills/. Scope DB writes by user_id. Tokens in CSS, no ad-hoc hex.",
+    "Keep AGENTS.md under 100 lines. Project facts here; task knowledge in skills/. Scope DB writes by user_id. Tokens in CSS, no ad-hoc hex. Apply the Agent OS pack — do not invent a second policy.",
   constraints:
-    "Preview binds 0.0.0.0:8080. Auth via Grok broker (Google, X). No secrets in client. Compaction before 200k prompt tokens.",
-  skills: [
-    "agents-md-maintainer",
-    "persistent-teammates",
-    "context-lifecycle",
-    "model-routing",
-  ],
+    `Preview binds 0.0.0.0:8080. Auth via Grok broker (Google, X). No secrets in client. Pack ${PACK_VERSION} in force: compact at 48k, always before 200k.`,
+  skills: PACK_SKILLS.filter((s) => s !== "agent-os"),
 };
 
 export function renderAgentsMd(spec: SpecDoc): string {
@@ -23,6 +19,10 @@ export function renderAgentsMd(spec: SpecDoc): string {
     .join("\n");
 
   return `# ${spec.project}
+
+## Boot
+- Load \`.grok/skills/agent-os/SKILL.md\` then \`.grok/skills/catalog.json\`
+- Apply catalog defaults. Do not re-invent the pack.
 
 ## Stack
 ${spec.stack}
@@ -38,6 +38,7 @@ ${spec.conventions}
 ${spec.constraints}
 
 ## Skills (task knowledge — not project context)
+- \`.grok/skills/agent-os/SKILL.md\` — operator, load first
 ${skills || "- (none yet)"}
 
 ## Notes

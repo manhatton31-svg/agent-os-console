@@ -7,10 +7,13 @@ import {
   GitBranch,
   Radio,
   Route as RouteIcon,
+  ShieldCheck,
 } from "lucide-react";
 import { SignedIn, SignedOut, UserButton } from "@/lib/auth/gates";
 import { useCurrentUserState } from "@/lib/auth/use-current-user";
 import { cn } from "@/lib/utils";
+import { PACK_VERSION, routingMatchesPack } from "@/lib/os/pack";
+import { useOs } from "@/lib/os/store";
 
 const NAV = [
   { to: "/", label: "Mission", icon: Activity },
@@ -19,11 +22,13 @@ const NAV = [
   { to: "/context", label: "Context", icon: GitBranch },
   { to: "/routing", label: "Routing", icon: RouteIcon },
   { to: "/events", label: "Events", icon: Radio },
+  { to: "/pack", label: "Pack", icon: ShieldCheck },
 ] as const;
 
 export function Shell({ children }: { children: ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const { isPending } = useCurrentUserState();
+  const inForce = useOs((s) => routingMatchesPack(s.routing));
 
   return (
     <div className="min-h-dvh bg-bg text-fg">
@@ -32,10 +37,21 @@ export function Shell({ children }: { children: ReactNode }) {
           <Link to="/" className="min-w-0">
             <p className="font-display text-xl tracking-tight text-fg">Agent OS</p>
             <p className="truncate text-[11px] uppercase tracking-[0.16em] text-faint">
-              Monday cycle · live
+              Monday cycle · {inForce ? "pack in force" : "pack drifted"}
             </p>
           </Link>
           <div className="flex items-center gap-3">
+            <Link
+              to="/pack"
+              className={cn(
+                "hidden h-11 items-center rounded-lg border px-3 text-xs sm:inline-flex",
+                inForce
+                  ? "border-ok/40 bg-ok/10 text-ok"
+                  : "border-warn/40 bg-warn/10 text-warn",
+              )}
+            >
+              {PACK_VERSION}
+            </Link>
             {isPending ? (
               <div className="h-8 w-24 animate-pulse rounded-full bg-raised" />
             ) : (

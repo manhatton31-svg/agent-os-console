@@ -2,10 +2,10 @@ import type {
   ContextWindow,
   Mission,
   OsSnapshot,
-  RoutingPolicy,
   Teammate,
 } from "./types";
 import { DEFAULT_SPEC } from "./spec";
+import { PACK_DEFAULTS, laneForRole } from "./pack";
 
 export function makeVmId(seed = "hx0001") {
   return `vm-${seed}`;
@@ -13,15 +13,13 @@ export function makeVmId(seed = "hx0001") {
 
 export function seedTeammates(): Teammate[] {
   const now = 0;
-  return [
+  const mates: Array<Omit<Teammate, "model" | "effort"> & { model?: string; effort?: Teammate["effort"] }> = [
     {
       id: "tm_atlas",
       name: "Atlas",
       role: "planner",
       status: "idle",
       vmId: makeVmId("atlas01"),
-      model: "grok-4.6",
-      effort: "xhigh",
       contextTokens: 2400,
       lastNote: "Ready to decompose a goal.",
       createdAt: now,
@@ -32,8 +30,6 @@ export function seedTeammates(): Teammate[] {
       role: "implementor",
       status: "idle",
       vmId: makeVmId("forge01"),
-      model: "grok-4.5",
-      effort: "medium",
       contextTokens: 1800,
       lastNote: "Waiting on a thin slice.",
       createdAt: now,
@@ -44,8 +40,6 @@ export function seedTeammates(): Teammate[] {
       role: "skeptic",
       status: "idle",
       vmId: makeVmId("skpt01"),
-      model: "grok-4.6",
-      effort: "high",
       contextTokens: 1600,
       lastNote: "Verification lane clear.",
       createdAt: now,
@@ -56,8 +50,6 @@ export function seedTeammates(): Teammate[] {
       role: "archivist",
       status: "idle",
       vmId: makeVmId("arch01"),
-      model: "grok-4.5",
-      effort: "low",
       contextTokens: 900,
       lastNote: "Fuel write-back idle.",
       createdAt: now,
@@ -68,23 +60,18 @@ export function seedTeammates(): Teammate[] {
       role: "courier",
       status: "idle",
       vmId: makeVmId("cour01"),
-      model: "grok-4.5",
-      effort: "low",
       contextTokens: 700,
       lastNote: "Bus subscribed.",
       createdAt: now,
     },
   ];
+  return mates.map((m) => {
+    const lane = laneForRole(m.role);
+    return { ...m, model: lane.model, effort: lane.effort };
+  });
 }
 
-export const DEFAULT_ROUTING: RoutingPolicy = {
-  planModel: "grok-4.6",
-  planEffort: "xhigh",
-  execModel: "grok-4.5",
-  execEffort: "medium",
-  compactAt: 48_000,
-  isolateSubagents: true,
-};
+export const DEFAULT_ROUTING = { ...PACK_DEFAULTS };
 
 export function seedContext(): ContextWindow {
   return {
@@ -93,7 +80,7 @@ export function seedContext(): ContextWindow {
     rotScore: 8,
     lastCompactAt: null,
     stage: "admit",
-    notes: ["Session opened. Admitted project AGENTS.md + five teammate cards."],
+    notes: ["Session opened. Agent OS pack 2026-08-17 in force."],
   };
 }
 
@@ -121,7 +108,7 @@ export function seedSnapshot(): OsSnapshot {
         at: 0,
         source: "system",
         kind: "boot",
-        payload: "Agent OS console restored. Teammates idle on isolated VMs.",
+        payload: "Agent OS pack 2026-08-17 in force. Teammates idle on isolated VMs.",
       },
     ],
     mission: null,

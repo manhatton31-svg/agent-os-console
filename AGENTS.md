@@ -45,6 +45,11 @@ broken, or ugly, that is their whole experience.
 If `AGENTS.project.md` exists in this workspace, it contains the user's
 project instructions; follow it with the same priority as this file.
 
+If `.grok/skills/agent-os/SKILL.md` exists, this is an Agent OS workspace.
+Load it and `.grok/skills/catalog.json` before writing product code. Apply
+catalog defaults (plan/verify on grok-4.6, execute cheaper, compact at 48k).
+Do not re-invent teammates, routing, context lifecycle, or the event bus.
+
 ---
 
 ## 1. Your environment / workspace (for you, never surfaced to the user)

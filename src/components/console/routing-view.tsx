@@ -1,15 +1,19 @@
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Label, Select } from "@/components/ui/field";
+import { PACK_DEFAULTS, routingMatchesPack } from "@/lib/os/pack";
 import { useOs } from "@/lib/os/store";
 import type { Effort } from "@/lib/os/types";
 import { formatTokens } from "@/lib/utils";
+import { RotateCcw } from "lucide-react";
 
 const MODELS = ["grok-4.6", "grok-4.5", "grok-4.5-fast"];
 const EFFORTS: Effort[] = ["low", "medium", "high", "xhigh"];
 const THRESHOLDS = [24_000, 48_000, 96_000, 160_000];
 
 export function RoutingView() {
-  const { routing, setRouting, teammates } = useOs();
+  const { routing, setRouting, teammates, applyPack } = useOs();
+  const inForce = routingMatchesPack(routing);
 
   return (
     <div className="grid gap-6 lg:grid-cols-[1fr_1fr]">
@@ -89,6 +93,13 @@ export function RoutingView() {
             />
             Isolate skeptic / worker threads (context quarantine)
           </label>
+          <div className="flex flex-wrap items-center gap-2">
+            <Badge tone={inForce ? "ok" : "warn"}>{inForce ? "Matches pack" : "Drifted from pack"}</Badge>
+            <Button size="sm" variant="secondary" onClick={() => applyPack()} disabled={inForce}>
+              <RotateCcw className="size-3.5" />
+              Restore {PACK_DEFAULTS.planModel} / {PACK_DEFAULTS.execModel}
+            </Button>
+          </div>
         </div>
       </section>
 

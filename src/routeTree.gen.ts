@@ -13,9 +13,11 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ContextRouteImport } from './routes/context'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as PackRouteImport } from './routes/pack'
 import { Route as RoutingRouteImport } from './routes/routing'
 import { Route as SpecRouteImport } from './routes/spec'
 import { Route as TeammatesRouteImport } from './routes/teammates'
+import { Route as ApiAgentOsCatalogRouteImport } from './routes/api/agent-os/catalog'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
 const IndexRoute = IndexRouteImport.update({
@@ -38,6 +40,11 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PackRoute = PackRouteImport.update({
+  id: '/pack',
+  path: '/pack',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RoutingRoute = RoutingRouteImport.update({
   id: '/routing',
   path: '/routing',
@@ -53,6 +60,11 @@ const TeammatesRoute = TeammatesRouteImport.update({
   path: '/teammates',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAgentOsCatalogRoute = ApiAgentOsCatalogRouteImport.update({
+  id: '/api/agent-os/catalog',
+  path: '/api/agent-os/catalog',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
@@ -64,9 +76,11 @@ export interface FileRoutesByFullPath {
   '/context': typeof ContextRoute
   '/events': typeof EventsRoute
   '/login': typeof LoginRoute
+  '/pack': typeof PackRoute
   '/routing': typeof RoutingRoute
   '/spec': typeof SpecRoute
   '/teammates': typeof TeammatesRoute
+  '/api/agent-os/catalog': typeof ApiAgentOsCatalogRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesByTo {
@@ -74,9 +88,11 @@ export interface FileRoutesByTo {
   '/context': typeof ContextRoute
   '/events': typeof EventsRoute
   '/login': typeof LoginRoute
+  '/pack': typeof PackRoute
   '/routing': typeof RoutingRoute
   '/spec': typeof SpecRoute
   '/teammates': typeof TeammatesRoute
+  '/api/agent-os/catalog': typeof ApiAgentOsCatalogRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesById {
@@ -85,9 +101,11 @@ export interface FileRoutesById {
   '/context': typeof ContextRoute
   '/events': typeof EventsRoute
   '/login': typeof LoginRoute
+  '/pack': typeof PackRoute
   '/routing': typeof RoutingRoute
   '/spec': typeof SpecRoute
   '/teammates': typeof TeammatesRoute
+  '/api/agent-os/catalog': typeof ApiAgentOsCatalogRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRouteTypes {
@@ -97,9 +115,11 @@ export interface FileRouteTypes {
     | '/context'
     | '/events'
     | '/login'
+    | '/pack'
     | '/routing'
     | '/spec'
     | '/teammates'
+    | '/api/agent-os/catalog'
     | '/api/auth/$'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -107,9 +127,11 @@ export interface FileRouteTypes {
     | '/context'
     | '/events'
     | '/login'
+    | '/pack'
     | '/routing'
     | '/spec'
     | '/teammates'
+    | '/api/agent-os/catalog'
     | '/api/auth/$'
   id:
     | '__root__'
@@ -117,9 +139,11 @@ export interface FileRouteTypes {
     | '/context'
     | '/events'
     | '/login'
+    | '/pack'
     | '/routing'
     | '/spec'
     | '/teammates'
+    | '/api/agent-os/catalog'
     | '/api/auth/$'
   fileRoutesById: FileRoutesById
 }
@@ -128,9 +152,11 @@ export interface RootRouteChildren {
   ContextRoute: typeof ContextRoute
   EventsRoute: typeof EventsRoute
   LoginRoute: typeof LoginRoute
+  PackRoute: typeof PackRoute
   RoutingRoute: typeof RoutingRoute
   SpecRoute: typeof SpecRoute
   TeammatesRoute: typeof TeammatesRoute
+  ApiAgentOsCatalogRoute: typeof ApiAgentOsCatalogRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
 
@@ -164,6 +190,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/pack': {
+      id: '/pack'
+      path: '/pack'
+      fullPath: '/pack'
+      preLoaderRoute: typeof PackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/routing': {
       id: '/routing'
       path: '/routing'
@@ -185,6 +218,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TeammatesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/agent-os/catalog': {
+      id: '/api/agent-os/catalog'
+      path: '/api/agent-os/catalog'
+      fullPath: '/api/agent-os/catalog'
+      preLoaderRoute: typeof ApiAgentOsCatalogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/api/auth/$'
@@ -200,9 +240,11 @@ const rootRouteChildren: RootRouteChildren = {
   ContextRoute: ContextRoute,
   EventsRoute: EventsRoute,
   LoginRoute: LoginRoute,
+  PackRoute: PackRoute,
   RoutingRoute: RoutingRoute,
   SpecRoute: SpecRoute,
   TeammatesRoute: TeammatesRoute,
+  ApiAgentOsCatalogRoute: ApiAgentOsCatalogRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
 export const routeTree = rootRouteImport
