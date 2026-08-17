@@ -1,6 +1,6 @@
-import type { Effort, RoutingPolicy } from "./types";
+import type { Effort, RoutingPolicy, Teammate, TeammateRole } from "./types";
 
-export const PACK_VERSION = "2026-08-17.2";
+export const PACK_VERSION = "2026-08-17.3";
 export const PACK_CYCLE = "weekly-new-patterns";
 
 export const PACK_SKILLS = [
@@ -114,6 +114,69 @@ export const PACK_IN_FORCE = [
   "Arcly v2 is a required pack consumer",
 ] as const;
 
+export const PACK_FLEET = [
+  {
+    id: "tm_atlas",
+    name: "Atlas",
+    role: "planner" as const satisfies TeammateRole,
+    vmSeed: "atlas01",
+    standing: "Decompose goals. Route expensive reasoning. Human is escalation only.",
+    duties: {
+      mon: "Decompose new patterns into implement / note / ignore. Skip inForce.",
+      wed: "Confirm Monday items landed on the pack and on Arcly.",
+      fri: "Ship, defer, or drop leftovers.",
+    },
+  },
+  {
+    id: "tm_forge",
+    name: "Forge",
+    role: "implementor" as const satisfies TeammateRole,
+    vmSeed: "forge01",
+    standing: "Execute thin slices on the cheap exec lane. Do not invent a second pack.",
+    duties: {
+      mon: "Idle until Atlas marks implement. One slice only.",
+      wed: "Close any Monday implement leftover — one slice.",
+      fri: "No new work. Finish or defer.",
+    },
+  },
+  {
+    id: "tm_skeptic",
+    name: "Skeptic",
+    role: "skeptic" as const satisfies TeammateRole,
+    vmSeed: "skpt01",
+    standing: "Verify in a quarantined thread. Flag shared blind spots.",
+    duties: {
+      mon: "Reject any recommendation already in inForce.",
+      wed: "Own Verify. Did Monday actually land?",
+      fri: "Refuse re-opens that Friday already dropped.",
+    },
+  },
+  {
+    id: "tm_arch",
+    name: "Archivist",
+    role: "archivist" as const satisfies TeammateRole,
+    vmSeed: "arch01",
+    standing: "Write back decisions. Compact fuel. AGENTS.md stays ≤100 lines.",
+    duties: {
+      mon: "Log implement items to Linear ARC-64 and Notion continuity.",
+      wed: "Record landed vs open. Do not stack recaps.",
+      fri: "Compact ≤10 lines of fuel for next Monday.",
+    },
+  },
+  {
+    id: "tm_courier",
+    name: "Courier",
+    role: "courier" as const satisfies TeammateRole,
+    vmSeed: "cour01",
+    standing: "Subscribe → reason → publish. No direct agent-to-agent calls.",
+    duties: {
+      mon: "Fan Discover findings onto the bus. Do not orchestrate.",
+      wed: "Fan Verify results. Flag Arcly if the pack drifted.",
+      fri: "Publish the fuel block. Close the week.",
+    },
+  },
+] as const;
+
 export const PACK_CONSUMERS = [
   {
     name: "arcly-v2",
@@ -150,6 +213,12 @@ export const AGENT_OS_PACK = {
   rules: [...PACK_RULES],
   scans: PACK_SCANS.map((s) => ({ ...s })),
   inForce: [...PACK_IN_FORCE],
+  fleet: PACK_FLEET.map((b) => ({
+    name: b.name,
+    role: b.role,
+    standing: b.standing,
+    duties: { ...b.duties },
+  })),
   consumers: PACK_CONSUMERS.map((c) => ({ ...c })),
   canonical: { ...PACK_CANONICAL },
 };
@@ -178,4 +247,28 @@ export function currentScan(now = new Date()) {
   if (weekday === "Fri") return PACK_SCANS[2];
   if (weekday === "Mon") return PACK_SCANS[0];
   return null;
+}
+
+export function fleetFor(role: string) {
+  return PACK_FLEET.find((b) => b.role === role);
+}
+
+export function dutyFor(role: string, now = new Date()) {
+  const bot = fleetFor(role);
+  if (!bot) return "";
+  const scan = currentScan(now);
+  if (!scan) return bot.standing;
+  return bot.duties[scan.id];
+}
+
+export function overlayFleet(mates: Teammate[]): Teammate[] {
+  return mates.map((m) => {
+    const lane = laneForRole(m.role);
+    return {
+      ...m,
+      model: lane.model,
+      effort: lane.effort,
+      lastNote: m.status === "idle" ? dutyFor(m.role) || m.lastNote : m.lastNote,
+    };
+  });
 }

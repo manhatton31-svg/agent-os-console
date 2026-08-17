@@ -9,11 +9,11 @@ description: >
   "fuel", "continuity", "boot pack", "in force", "helix", "arcly".
 metadata:
   short-description: "Universal Agent OS rules — load and APPLY before any other product skill"
-  version: "2026-08-17.2"
+  version: "2026-08-17.3"
 user-invocable: true
 ---
 
-# Agent OS (weekly pack 2026-08-17.2)
+# Agent OS (weekly pack 2026-08-17.3)
 
 **Apply this pack. Do not re-derive it.**
 

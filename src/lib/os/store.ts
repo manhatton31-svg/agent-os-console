@@ -9,7 +9,7 @@ import type {
 import { ROLE_BLURB, ROLE_LABEL } from "./types";
 import { seedSnapshot, makeVmId } from "./defaults";
 import { compactNow, quarantine, startMission, tickSnapshot } from "./engine";
-import { laneForRole, PACK_DEFAULTS, PACK_SKILLS } from "./pack";
+import { laneForRole, overlayFleet, PACK_DEFAULTS, PACK_SKILLS, PACK_VERSION } from "./pack";
 import { uid } from "@/lib/utils";
 
 interface OsStore extends OsSnapshot {
@@ -51,17 +51,14 @@ export const useOs = create<OsStore>()((set, get) => ({
     set({
       routing: { ...PACK_DEFAULTS },
       spec: { ...state.spec, skills: mergePackSkills(state.spec.skills) },
-      teammates: state.teammates.map((m) => {
-        const lane = laneForRole(m.role);
-        return { ...m, model: lane.model, effort: lane.effort };
-      }),
+      teammates: overlayFleet(state.teammates),
       events: [
         {
           id: uid("ev"),
           at: Date.now(),
           source: "system",
           kind: "pack",
-          payload: "Monday-cycle pack reapplied. Routing, lanes, and required skills restored.",
+          payload: `Pack ${PACK_VERSION} reapplied. Fleet briefed on Mon Discover / Wed Verify / Fri Close.`,
         },
         ...state.events,
       ].slice(0, 80),
@@ -128,6 +125,7 @@ export const useOs = create<OsStore>()((set, get) => ({
         ...snap.spec,
         skills: mergePackSkills(snap.spec.skills ?? []),
       },
+      teammates: overlayFleet(snap.teammates ?? []),
     }),
   reset: () => set(seedSnapshot()),
 }));

@@ -5,69 +5,27 @@ import type {
   Teammate,
 } from "./types";
 import { DEFAULT_SPEC } from "./spec";
-import { PACK_DEFAULTS, laneForRole } from "./pack";
+import { dutyFor, laneForRole, PACK_DEFAULTS, PACK_FLEET, PACK_VERSION } from "./pack";
 
 export function makeVmId(seed = "hx0001") {
   return `vm-${seed}`;
 }
 
 export function seedTeammates(): Teammate[] {
-  const now = 0;
-  const mates: Array<Omit<Teammate, "model" | "effort"> & { model?: string; effort?: Teammate["effort"] }> = [
-    {
-      id: "tm_atlas",
-      name: "Atlas",
-      role: "planner",
-      status: "idle",
-      vmId: makeVmId("atlas01"),
-      contextTokens: 2400,
-      lastNote: "Ready to decompose a goal.",
-      createdAt: now,
-    },
-    {
-      id: "tm_forge",
-      name: "Forge",
-      role: "implementor",
-      status: "idle",
-      vmId: makeVmId("forge01"),
-      contextTokens: 1800,
-      lastNote: "Waiting on a thin slice.",
-      createdAt: now,
-    },
-    {
-      id: "tm_skeptic",
-      name: "Skeptic",
-      role: "skeptic",
-      status: "idle",
-      vmId: makeVmId("skpt01"),
-      contextTokens: 1600,
-      lastNote: "Verification lane clear.",
-      createdAt: now,
-    },
-    {
-      id: "tm_arch",
-      name: "Archivist",
-      role: "archivist",
-      status: "idle",
-      vmId: makeVmId("arch01"),
-      contextTokens: 900,
-      lastNote: "Fuel write-back idle.",
-      createdAt: now,
-    },
-    {
-      id: "tm_courier",
-      name: "Courier",
-      role: "courier",
-      status: "idle",
-      vmId: makeVmId("cour01"),
-      contextTokens: 700,
-      lastNote: "Bus subscribed.",
-      createdAt: now,
-    },
-  ];
-  return mates.map((m) => {
-    const lane = laneForRole(m.role);
-    return { ...m, model: lane.model, effort: lane.effort };
+  return PACK_FLEET.map((bot) => {
+    const lane = laneForRole(bot.role);
+    return {
+      id: bot.id,
+      name: bot.name,
+      role: bot.role,
+      status: "idle" as const,
+      vmId: makeVmId(bot.vmSeed),
+      model: lane.model,
+      effort: lane.effort,
+      contextTokens: bot.role === "planner" ? 2400 : bot.role === "implementor" ? 1800 : 1200,
+      lastNote: dutyFor(bot.role),
+      createdAt: 0,
+    };
   });
 }
 
@@ -80,7 +38,7 @@ export function seedContext(): ContextWindow {
     rotScore: 8,
     lastCompactAt: null,
     stage: "admit",
-    notes: ["Session opened. Agent OS pack 2026-08-17 in force."],
+    notes: [`Session opened. Agent OS pack ${PACK_VERSION} in force. Fleet briefed.`],
   };
 }
 
@@ -108,7 +66,7 @@ export function seedSnapshot(): OsSnapshot {
         at: 0,
         source: "system",
         kind: "boot",
-        payload: "Agent OS pack 2026-08-17 in force. Teammates idle on isolated VMs.",
+        payload: `Agent OS pack ${PACK_VERSION} in force. Atlas, Forge, Skeptic, Archivist, Courier briefed on Mon/Wed/Fri.`,
       },
     ],
     mission: null,

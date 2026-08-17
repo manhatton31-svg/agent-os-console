@@ -6,7 +6,7 @@
 3. Apply catalog defaults. Do not invent a second routing, teammate, or context policy.
 4. Load only the specialist skill the current mission needs.
 
-## In force (weekly pack 2026-08-17.2)
+## In force (weekly pack 2026-08-17.3)
 - Plan / verify: grok-4.6 · xhigh / high
 - Execute / archive / courier: grok-4.5 · medium / low
 - Compact at 48k (always before 200k)

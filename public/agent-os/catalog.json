@@ -1,5 +1,5 @@
 {
-  "version": "2026-08-17.2",
+  "version": "2026-08-17.3",
   "cycle": "weekly-new-patterns",
   "status": "in-force",
   "required": true,
@@ -75,6 +75,58 @@
     "Event bus subscribe → reason → publish",
     "Compact at 48k; isolate skeptic threads",
     "Arcly v2 is a required pack consumer"
+  ],
+  "fleet": [
+    {
+      "name": "Atlas",
+      "role": "planner",
+      "standing": "Decompose goals. Route expensive reasoning. Human is escalation only.",
+      "duties": {
+        "mon": "Decompose new patterns into implement / note / ignore. Skip inForce.",
+        "wed": "Confirm Monday items landed on the pack and on Arcly.",
+        "fri": "Ship, defer, or drop leftovers."
+      }
+    },
+    {
+      "name": "Forge",
+      "role": "implementor",
+      "standing": "Execute thin slices on the cheap exec lane. Do not invent a second pack.",
+      "duties": {
+        "mon": "Idle until Atlas marks implement. One slice only.",
+        "wed": "Close any Monday implement leftover — one slice.",
+        "fri": "No new work. Finish or defer."
+      }
+    },
+    {
+      "name": "Skeptic",
+      "role": "skeptic",
+      "standing": "Verify in a quarantined thread. Flag shared blind spots.",
+      "duties": {
+        "mon": "Reject any recommendation already in inForce.",
+        "wed": "Own Verify. Did Monday actually land?",
+        "fri": "Refuse re-opens that Friday already dropped."
+      }
+    },
+    {
+      "name": "Archivist",
+      "role": "archivist",
+      "standing": "Write back decisions. Compact fuel. AGENTS.md stays ≤100 lines.",
+      "duties": {
+        "mon": "Log implement items to Linear ARC-64 and Notion continuity.",
+        "wed": "Record landed vs open. Do not stack recaps.",
+        "fri": "Compact ≤10 lines of fuel for next Monday."
+      }
+    },
+    {
+      "name": "Courier",
+      "role": "courier",
+      "standing": "Subscribe → reason → publish. No direct agent-to-agent calls.",
+      "duties": {
+        "mon": "Fan Discover findings onto the bus. Do not orchestrate.",
+        "wed": "Fan Verify results. Flag Arcly if the pack drifted.",
+        "fri": "Publish the fuel block. Close the week."
+      }
+    }
   ],
   "consumers": [
     {

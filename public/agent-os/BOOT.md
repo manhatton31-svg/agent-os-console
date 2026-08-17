@@ -1,4 +1,4 @@
-# Agent OS boot contract — weekly pack 2026-08-17.2
+# Agent OS boot contract — weekly pack 2026-08-17.3
 
 If you are a Grok Build / Agent OS session starting work on Helix, Arcly,
 DealForge, LivingGoals, or any product that uses Agent OS: **stop and apply

@@ -24,7 +24,7 @@ This workspace is an Agent OS build. **Apply the pack. Do not re-invent it.**
 
 Each run fetches this catalog first. Do not re-recommend anything in `inForce`.
 
-## In force — weekly pack 2026-08-17.2
+## In force — weekly pack 2026-08-17.3
 
 | Lane | Model | Effort |
 |---|---|---|

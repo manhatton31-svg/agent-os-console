@@ -107,9 +107,9 @@ export const ROLE_LABEL: Record<TeammateRole, string> = {
 };
 
 export const ROLE_BLURB: Record<TeammateRole, string> = {
-  planner: "Decomposes goals. Routes expensive reasoning.",
-  implementor: "Executes thin slices on a cheap model.",
-  skeptic: "Self-verifies work. Flags shared blind spots.",
-  archivist: "Memory write-back and AGENTS.md hygiene.",
-  courier: "Event bus. Subscribe, reason, publish.",
+  planner: "Monday: decompose. Wednesday: confirm landing. Friday: ship / defer / drop.",
+  implementor: "Thin slices only. Monday waits. Wednesday closes leftovers. Friday stops.",
+  skeptic: "Reject inForce repeats. Wednesday owns Verify. Quarantine first.",
+  archivist: "Write back every cycle. Friday compact ≤10 lines of fuel.",
+  courier: "Fan Discover / Verify / Close onto the bus. Do not orchestrate.",
 };
