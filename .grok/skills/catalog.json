@@ -1,0 +1,21 @@
+{
+  "version": "2026-08-17",
+  "cycle": "monday-new-patterns",
+  "loadOrder": [
+    "GROK.md",
+    "AGENTS.project.md",
+    "agent-os",
+    "agents-md-maintainer",
+    "persistent-teammates",
+    "context-lifecycle",
+    "model-routing",
+    "event-bus"
+  ],
+  "defaults": {
+    "planModel": "grok-4.6",
+    "planEffort": "xhigh",
+    "execModel": "grok-4.5",
+    "execEffort": "medium",
+    "compactAt": 48000
+  }
+}

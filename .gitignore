@@ -1,0 +1,6 @@
+node_modules
+.vercel
+screenshots
+artifacts
+*.log
+.node_modules.lock
