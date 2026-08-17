@@ -1,0 +1,34 @@
+name: Notify pack consumers
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".grok/skills/catalog.json"
+      - ".grok/skills/agent-os/**"
+      - ".grok/skills/agents-md-maintainer/**"
+      - ".grok/skills/persistent-teammates/**"
+      - ".grok/skills/context-lifecycle/**"
+      - ".grok/skills/model-routing/**"
+      - ".grok/skills/event-bus/**"
+      - "public/agent-os/**"
+  workflow_dispatch:
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping required consumers
+        env:
+          GH_TOKEN: ${{ secrets.CONSUMER_DISPATCH_TOKEN }}
+        run: |
+          set -eu
+          if [ -z "${GH_TOKEN:-}" ]; then
+            echo "No CONSUMER_DISPATCH_TOKEN — Arcly pulls hourly from this repo. Skipping instant dispatch."
+            exit 0
+          fi
+          echo "Dispatching agent-os-pack-updated → manhatton31-svg/arcly-v2"
+          gh api --method POST \
+            -H "Accept: application/vnd.github+json" \
+            /repos/manhatton31-svg/arcly-v2/dispatches \
+            -f event_type='agent-os-pack-updated'

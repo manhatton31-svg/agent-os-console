@@ -1,5 +1,5 @@
 {
-  "version": "2026-08-17",
+  "version": "2026-08-17.1",
   "cycle": "monday-new-patterns",
   "status": "in-force",
   "required": true,
@@ -44,7 +44,10 @@
       "repo": "manhatton31-svg/arcly-v2",
       "required": true,
       "sync": "pull",
-      "path": ".grok/skills"
+      "cadence": "hourly",
+      "path": ".grok/skills",
+      "workflow": ".github/workflows/sync-agent-os-pack.yml",
+      "dispatch": "agent-os-pack-updated"
     }
   ],
   "canonical": {

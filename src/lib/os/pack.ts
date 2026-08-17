@@ -1,6 +1,6 @@
 import type { Effort, RoutingPolicy } from "./types";
 
-export const PACK_VERSION = "2026-08-17";
+export const PACK_VERSION = "2026-08-17.1";
 export const PACK_CYCLE = "monday-new-patterns";
 
 export const PACK_SKILLS = [
@@ -74,7 +74,10 @@ export const PACK_CONSUMERS = [
     repo: "manhatton31-svg/arcly-v2",
     required: true,
     sync: "pull",
+    cadence: "hourly",
     path: ".grok/skills",
+    workflow: ".github/workflows/sync-agent-os-pack.yml",
+    dispatch: "agent-os-pack-updated",
   },
 ] as const;
 

@@ -8,7 +8,7 @@ description: >
   "fuel", "continuity", "boot pack", "in force", "helix", "arcly".
 metadata:
   short-description: "Universal Agent OS rules — load and APPLY before any other product skill"
-  version: "2026-08-17"
+  version: "2026-08-17.1"
 user-invocable: true
 ---
 
@@ -48,9 +48,10 @@ Then open only the specialist the mission needs:
 
 After any pack change:
 1. Push this repo (`agent-os-console`)
-2. Arcly pulls automatically (GitHub Action every 6 hours, or `sh scripts/sync-agent-os-pack.sh` in that repo)
+2. Arcly pulls automatically — hourly Action + `repository_dispatch` (`agent-os-pack-updated`) + `sh scripts/sync-agent-os-pack.sh`
+3. The Arcly sync follows `catalog.requiredSkills` (new skills land without editing Arcly)
 
-Do not ship an Agent OS upgrade that is not on Arcly v2.
+Do not ship an Agent OS upgrade that is not on Arcly v2. Never overwrite Arcly's product kernel (`docs/agent-os/SOUL.md`, `DECISIONS.md`, `PROMPTS.md`, `BOT_ADDENDA.md`).
 
 ## Later builds
 

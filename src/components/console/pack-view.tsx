@@ -45,7 +45,7 @@ export function PackView() {
           Any later Agent OS session in this workspace loads AGENTS.project.md,
           then the agent-os skill, then applies catalog.json. New workspaces
           fetch the public boot contract. Arcly v2 is a required consumer —
-          it pull-syncs this catalog automatically.
+          it pull-syncs this catalog hourly, and on every pack push.
         </p>
 
         <ol className="mt-6 grid gap-2">
@@ -114,7 +114,7 @@ export function PackView() {
             {PACK_CONSUMERS.map((c) => (
               <li key={c.repo} className="flex items-center justify-between gap-2 text-xs">
                 <span className="text-muted">{c.name}</span>
-                <span className="font-mono text-faint">{c.sync} · required</span>
+                <span className="font-mono text-faint">{c.cadence} · required</span>
               </li>
             ))}
           </ul>
