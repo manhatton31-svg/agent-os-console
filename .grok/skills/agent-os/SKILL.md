@@ -2,17 +2,18 @@
 name: agent-os
 description: >
   REQUIRED first skill on any Agent OS, Helix, Arcly, DealForge, LivingGoals,
-  mission, teammate, or GROK.md session. Apply catalog.json defaults — do not
-  re-invent routing, teammates, context lifecycle, or the event bus. Triggers
-  on "agent os", "agent-os", "mission", "GROK.md", "Monday cycle", "teammates",
+  mission, teammate, GROK.md, Monday/Wednesday/Friday cycle session. Apply
+  catalog.json defaults — do not re-invent routing, teammates, context
+  lifecycle, or the event bus. Triggers on "agent os", "agent-os", "mission",
+  "GROK.md", "Monday cycle", "Wednesday cycle", "Friday cycle", "teammates",
   "fuel", "continuity", "boot pack", "in force", "helix", "arcly".
 metadata:
   short-description: "Universal Agent OS rules — load and APPLY before any other product skill"
-  version: "2026-08-17.1"
+  version: "2026-08-17.2"
 user-invocable: true
 ---
 
-# Agent OS (Monday cycle 2026-08-17)
+# Agent OS (weekly pack 2026-08-17.2)
 
 **Apply this pack. Do not re-derive it.**
 
@@ -26,6 +27,16 @@ Then open only the specialist the mission needs:
 | Token window / context rot | `context-lifecycle` |
 | Plan vs exec models | `model-routing` |
 | Subscribe / publish coordination | `event-bus` |
+
+## Weekly scans (09:00 ET)
+
+| Day | Role | Automation |
+|---|---|---|
+| Monday | Discover | `new-patterns-scan-mon` |
+| Wednesday | Verify | `new-patterns-scan-wed` |
+| Friday | Close | `new-patterns-scan-fri` |
+
+Each scan **fetches this catalog first**. Skip anything in `catalog.inForce`. Do not re-recommend the pack we already shipped.
 
 ## Hard rules
 
@@ -49,7 +60,7 @@ Then open only the specialist the mission needs:
 After any pack change:
 1. Push this repo (`agent-os-console`)
 2. Arcly pulls automatically — hourly Action + `repository_dispatch` (`agent-os-pack-updated`) + `sh scripts/sync-agent-os-pack.sh`
-3. The Arcly sync follows `catalog.requiredSkills` (new skills land without editing Arcly)
+3. The Arcly sync follows `catalog.requiredSkills`
 
 Do not ship an Agent OS upgrade that is not on Arcly v2. Never overwrite Arcly's product kernel (`docs/agent-os/SOUL.md`, `DECISIONS.md`, `PROMPTS.md`, `BOT_ADDENDA.md`).
 
@@ -59,6 +70,5 @@ If this skill is missing in a new workspace, fetch and apply:
 
 - `https://raw.githubusercontent.com/manhatton31-svg/agent-os-console/main/.grok/skills/catalog.json`
 - `https://raw.githubusercontent.com/manhatton31-svg/agent-os-console/main/public/agent-os/BOOT.md`
-- Copy `.grok/skills/{agent-os,agents-md-maintainer,persistent-teammates,context-lifecycle,model-routing,event-bus}` into the new workspace.
 
 Do not invent a parallel Agent OS.

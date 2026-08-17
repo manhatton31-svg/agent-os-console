@@ -14,7 +14,17 @@ This workspace is an Agent OS build. **Apply the pack. Do not re-invent it.**
    - `model-routing`
    - `event-bus`
 
-## In force — Monday cycle 2026-08-17
+## Weekly scans (09:00 America/New_York)
+
+| Day | Role | Automation |
+|---|---|---|
+| Monday | Discover | `new-patterns-scan-mon` |
+| Wednesday | Verify | `new-patterns-scan-wed` |
+| Friday | Close | `new-patterns-scan-fri` |
+
+Each run fetches this catalog first. Do not re-recommend anything in `inForce`.
+
+## In force — weekly pack 2026-08-17.2
 
 | Lane | Model | Effort |
 |---|---|---|
@@ -25,6 +35,4 @@ This workspace is an Agent OS build. **Apply the pack. Do not re-invent it.**
 
 Compact at **48k**. Always before the **200k** price band.
 
-Runtime source of truth: `src/lib/os/pack.ts`.  
-Machine copy: `/agent-os/catalog.json`.  
-Later builds: fetch `public/agent-os/BOOT.md` and apply it.
+Runtime source of truth: `src/lib/os/pack.ts`.

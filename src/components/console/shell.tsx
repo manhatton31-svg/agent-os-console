@@ -4,6 +4,7 @@ import {
   Activity,
   BookOpen,
   Boxes,
+  CalendarDays,
   GitBranch,
   Radio,
   Route as RouteIcon,
@@ -12,7 +13,7 @@ import {
 import { SignedIn, SignedOut, UserButton } from "@/lib/auth/gates";
 import { useCurrentUserState } from "@/lib/auth/use-current-user";
 import { cn } from "@/lib/utils";
-import { PACK_VERSION, routingMatchesPack } from "@/lib/os/pack";
+import { currentScan, PACK_VERSION, routingMatchesPack } from "@/lib/os/pack";
 import { useOs } from "@/lib/os/store";
 
 const NAV = [
@@ -22,6 +23,7 @@ const NAV = [
   { to: "/context", label: "Context", icon: GitBranch },
   { to: "/routing", label: "Routing", icon: RouteIcon },
   { to: "/events", label: "Events", icon: Radio },
+  { to: "/cycles", label: "Cycles", icon: CalendarDays },
   { to: "/pack", label: "Pack", icon: ShieldCheck },
 ] as const;
 
@@ -29,6 +31,7 @@ export function Shell({ children }: { children: ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const { isPending } = useCurrentUserState();
   const inForce = useOs((s) => routingMatchesPack(s.routing));
+  const today = currentScan();
 
   return (
     <div className="min-h-dvh bg-bg text-fg">
@@ -37,7 +40,8 @@ export function Shell({ children }: { children: ReactNode }) {
           <Link to="/" className="min-w-0">
             <p className="font-display text-xl tracking-tight text-fg">Agent OS</p>
             <p className="truncate text-[11px] uppercase tracking-[0.16em] text-faint">
-              Monday cycle · {inForce ? "pack in force" : "pack drifted"}
+              Mon · Wed · Fri · {inForce ? "pack in force" : "pack drifted"}
+              {today ? ` · ${today.role}` : ""}
             </p>
           </Link>
           <div className="flex items-center gap-3">

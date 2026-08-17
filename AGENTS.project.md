@@ -6,13 +6,19 @@
 3. Apply catalog defaults. Do not invent a second routing, teammate, or context policy.
 4. Load only the specialist skill the current mission needs.
 
-## In force (Monday cycle 2026-08-17)
+## In force (weekly pack 2026-08-17.2)
 - Plan / verify: grok-4.6 · xhigh / high
 - Execute / archive / courier: grok-4.5 · medium / low
 - Compact at 48k (always before 200k)
 - Fleet: Atlas, Forge, Skeptic, Archivist, Courier — isolated VMs
 - Coordination: subscribe → reason → publish
 - AGENTS.md = place (≤100 lines). SKILL.md = how.
+
+## Weekly scans · 09:00 ET
+- Monday Discover — `new-patterns-scan-mon`
+- Wednesday Verify — `new-patterns-scan-wed`
+- Friday Close — `new-patterns-scan-fri`
+Each scan fetches the catalog first. Skip anything in `inForce`.
 
 ## Stack
 TanStack Start, React 19, Tailwind v4, Zustand, Postgres/PGLite
@@ -37,6 +43,5 @@ TanStack Start, React 19, Tailwind v4, Zustand, Postgres/PGLite
 
 ## Later builds
 Fetch and apply this pack. Do not re-derive it.
-- This workspace: files above
 - GitHub: https://github.com/manhatton31-svg/agent-os-console
 - Live: `/agent-os/catalog.json` and `/agent-os/BOOT.md`

@@ -38,9 +38,10 @@ export function MissionView() {
           Persistent teammates, one escalation point.
         </h1>
         <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted">
-          Monday cycle is live. Planner reasons on grok-4.6 xhigh. Implementors
-          execute cheap. Skeptic verifies in an isolated thread. You only step
-          in when the bus escalates. The pack is in force — later Agent OS
+          Weekly cadence is live — Monday discovers, Wednesday verifies, Friday
+          closes. Planner reasons on grok-4.6 xhigh. Implementors execute cheap.
+          Skeptic verifies in an isolated thread. You only step in when the bus
+          escalates. The pack is in force — later Agent OS
           builds load it first and apply the same policy.
         </p>
 

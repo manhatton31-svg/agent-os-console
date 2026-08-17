@@ -1,4 +1,4 @@
-# Agent OS boot contract — Monday cycle 2026-08-17
+# Agent OS boot contract — weekly pack 2026-08-17.2
 
 If you are a Grok Build / Agent OS session starting work on Helix, Arcly,
 DealForge, LivingGoals, or any product that uses Agent OS: **stop and apply
@@ -18,7 +18,17 @@ Do not invent a parallel routing policy, teammate model, or context scheme.
    - `model-routing`
    - `event-bus`
 
-## 2. Defaults you must apply
+## 2. Weekly scans (09:00 America/New_York)
+
+| Day | Role | Automation |
+|---|---|---|
+| Monday | Discover | `new-patterns-scan-mon` |
+| Wednesday | Verify | `new-patterns-scan-wed` |
+| Friday | Close | `new-patterns-scan-fri` |
+
+Each automation must fetch this catalog first and skip `inForce` items.
+
+## 3. Defaults you must apply
 
 | Lane | Model | Effort |
 |---|---|---|
@@ -31,34 +41,13 @@ Do not invent a parallel routing policy, teammate model, or context scheme.
 - Isolate skeptic / worker threads (context quarantine).
 - Default fleet: Atlas (planner), Forge (implementor), Skeptic, Archivist, Courier.
 
-## 3. Hard rules
+## 4. Hard rules
 
 1. AGENTS.md = place (≤100 lines). SKILL.md = how.
 2. Teammates have isolated VMs. Human is escalation only.
 3. Context lifecycle: admit → place → compact → recover → reuse → govern.
 4. No direct agent-to-agent calls. Subscribe → reason → publish.
 5. Write back decisions. Do not leave state only in the transcript.
-
-## 4. How to install into a new workspace
-
-Copy these folders from https://github.com/manhatton31-svg/agent-os-console:
-
-- `.grok/skills/agent-os`
-- `.grok/skills/agents-md-maintainer`
-- `.grok/skills/persistent-teammates`
-- `.grok/skills/context-lifecycle`
-- `.grok/skills/model-routing`
-- `.grok/skills/event-bus`
-- `.grok/skills/catalog.json`
-- `GROK.md`
-
-Then add this to the project instructions file (AGENTS.project.md or AGENTS.md):
-
-```
-If `.grok/skills/agent-os/SKILL.md` exists, load it and catalog.json
-before writing product code. Apply catalog defaults. Do not re-invent
-teammates, routing, context lifecycle, or the event bus.
-```
 
 Canonical catalog: `/agent-os/catalog.json`
 GitHub: https://github.com/manhatton31-svg/agent-os-console

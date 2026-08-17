@@ -42,10 +42,10 @@ export function PackView() {
         </h1>
         <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted">
           Catalog defaults drive routing, teammate lanes, and required skills.
-          Any later Agent OS session in this workspace loads AGENTS.project.md,
-          then the agent-os skill, then applies catalog.json. New workspaces
-          fetch the public boot contract. Arcly v2 is a required consumer —
-          it pull-syncs this catalog hourly, and on every pack push.
+          Monday / Wednesday / Friday scans fetch this catalog first and skip
+          anything already in force. New workspaces fetch the public boot
+          contract. Arcly v2 is a required consumer — it pull-syncs this
+          catalog hourly, and on every pack push.
         </p>
 
         <ol className="mt-6 grid gap-2">

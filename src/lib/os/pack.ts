@@ -1,7 +1,7 @@
 import type { Effort, RoutingPolicy } from "./types";
 
-export const PACK_VERSION = "2026-08-17.1";
-export const PACK_CYCLE = "monday-new-patterns";
+export const PACK_VERSION = "2026-08-17.2";
+export const PACK_CYCLE = "weekly-new-patterns";
 
 export const PACK_SKILLS = [
   "agent-os",
@@ -68,6 +68,52 @@ export const PACK_RULES = [
   "Write back decisions. Do not leave state only in the transcript.",
 ] as const;
 
+export const PACK_SCANS = [
+  {
+    id: "mon",
+    day: "Monday",
+    role: "Discover",
+    time: "09:00",
+    timezone: "America/New_York",
+    automation: "new-patterns-scan-mon",
+    taskId: "b5445ac5-bfba-43e6-ada5-c7f54f5b5f45",
+    focus:
+      "Broad 7–14 day scan. Official Grok/xAI, routing, long-horizon, event-driven agents. Recommend implement only if it is not already in this pack.",
+  },
+  {
+    id: "wed",
+    day: "Wednesday",
+    role: "Verify",
+    time: "09:00",
+    timezone: "America/New_York",
+    automation: "new-patterns-scan-wed",
+    taskId: "3fb420ff-f903-410b-8f3e-1bddd1cd2d1b",
+    focus:
+      "Did Monday’s implement items land? Mid-week scan of skills/SOPs, context Write/Select/Compress/Isolate, MCP and memory. Do not re-litigate routing or long-horizon unless new since Monday.",
+  },
+  {
+    id: "fri",
+    day: "Friday",
+    role: "Close",
+    time: "09:00",
+    timezone: "America/New_York",
+    automation: "new-patterns-scan-fri",
+    taskId: "2ec58498-e59a-4a60-805e-952cca239e17",
+    focus:
+      "Week-close scan. Long-horizon and self-improving leftovers. Ship, defer, or drop each open item. Compact ≤10 lines of fuel for next Monday.",
+  },
+] as const;
+
+export const PACK_IN_FORCE = [
+  "AGENTS.md vs SKILL.md split (≤100 lines)",
+  "Persistent teammates / Grok Bot fleet (Atlas, Forge, Skeptic, Archivist, Courier)",
+  "Context lifecycle admit → place → compact → recover → reuse → govern",
+  "Model routing grok-4.6 xhigh plan / grok-4.5 medium exec",
+  "Event bus subscribe → reason → publish",
+  "Compact at 48k; isolate skeptic threads",
+  "Arcly v2 is a required pack consumer",
+] as const;
+
 export const PACK_CONSUMERS = [
   {
     name: "arcly-v2",
@@ -102,6 +148,8 @@ export const AGENT_OS_PACK = {
   defaults: { ...PACK_DEFAULTS },
   lanes: PACK_LANES.map((l) => ({ ...l, roles: [...l.roles] })),
   rules: [...PACK_RULES],
+  scans: PACK_SCANS.map((s) => ({ ...s })),
+  inForce: [...PACK_IN_FORCE],
   consumers: PACK_CONSUMERS.map((c) => ({ ...c })),
   canonical: { ...PACK_CANONICAL },
 };
@@ -119,4 +167,15 @@ export function routingMatchesPack(routing: RoutingPolicy) {
 
 export function laneForRole(role: string) {
   return PACK_LANES.find((l) => (l.roles as readonly string[]).includes(role)) ?? PACK_LANES[2];
+}
+
+export function currentScan(now = new Date()) {
+  const weekday = new Intl.DateTimeFormat("en-US", {
+    weekday: "short",
+    timeZone: "America/New_York",
+  }).format(now);
+  if (weekday === "Wed") return PACK_SCANS[1];
+  if (weekday === "Fri") return PACK_SCANS[2];
+  if (weekday === "Mon") return PACK_SCANS[0];
+  return null;
 }

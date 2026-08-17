@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ContextRouteImport } from './routes/context'
+import { Route as CyclesRouteImport } from './routes/cycles'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as PackRouteImport } from './routes/pack'
@@ -28,6 +29,11 @@ const IndexRoute = IndexRouteImport.update({
 const ContextRoute = ContextRouteImport.update({
   id: '/context',
   path: '/context',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CyclesRoute = CyclesRouteImport.update({
+  id: '/cycles',
+  path: '/cycles',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EventsRoute = EventsRouteImport.update({
@@ -74,6 +80,7 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/context': typeof ContextRoute
+  '/cycles': typeof CyclesRoute
   '/events': typeof EventsRoute
   '/login': typeof LoginRoute
   '/pack': typeof PackRoute
@@ -86,6 +93,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/context': typeof ContextRoute
+  '/cycles': typeof CyclesRoute
   '/events': typeof EventsRoute
   '/login': typeof LoginRoute
   '/pack': typeof PackRoute
@@ -99,6 +107,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/context': typeof ContextRoute
+  '/cycles': typeof CyclesRoute
   '/events': typeof EventsRoute
   '/login': typeof LoginRoute
   '/pack': typeof PackRoute
@@ -113,6 +122,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/context'
+    | '/cycles'
     | '/events'
     | '/login'
     | '/pack'
@@ -125,6 +135,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/context'
+    | '/cycles'
     | '/events'
     | '/login'
     | '/pack'
@@ -137,6 +148,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/context'
+    | '/cycles'
     | '/events'
     | '/login'
     | '/pack'
@@ -150,6 +162,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ContextRoute: typeof ContextRoute
+  CyclesRoute: typeof CyclesRoute
   EventsRoute: typeof EventsRoute
   LoginRoute: typeof LoginRoute
   PackRoute: typeof PackRoute
@@ -174,6 +187,13 @@ declare module '@tanstack/react-router' {
       path: '/context'
       fullPath: '/context'
       preLoaderRoute: typeof ContextRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cycles': {
+      id: '/cycles'
+      path: '/cycles'
+      fullPath: '/cycles'
+      preLoaderRoute: typeof CyclesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/events': {
@@ -238,6 +258,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ContextRoute: ContextRoute,
+  CyclesRoute: CyclesRoute,
   EventsRoute: EventsRoute,
   LoginRoute: LoginRoute,
   PackRoute: PackRoute,

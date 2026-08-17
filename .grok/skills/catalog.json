@@ -1,6 +1,6 @@
 {
-  "version": "2026-08-17.1",
-  "cycle": "monday-new-patterns",
+  "version": "2026-08-17.2",
+  "cycle": "weekly-new-patterns",
   "status": "in-force",
   "required": true,
   "applyOnBoot": true,
@@ -37,6 +37,44 @@
     "Compact at 48k. Always before the 200k price band.",
     "No direct agent-to-agent calls. Subscribe → reason → publish.",
     "Write back decisions. Do not leave state only in the transcript."
+  ],
+  "scans": [
+    {
+      "id": "mon",
+      "day": "Monday",
+      "role": "Discover",
+      "time": "09:00",
+      "timezone": "America/New_York",
+      "automation": "new-patterns-scan-mon",
+      "focus": "Broad 7–14 day scan. Official Grok/xAI, routing, long-horizon, event-driven. Implement only if not already in this pack."
+    },
+    {
+      "id": "wed",
+      "day": "Wednesday",
+      "role": "Verify",
+      "time": "09:00",
+      "timezone": "America/New_York",
+      "automation": "new-patterns-scan-wed",
+      "focus": "Did Monday implement items land? Mid-week scan of skills/SOPs, context W/S/C/I, MCP and memory."
+    },
+    {
+      "id": "fri",
+      "day": "Friday",
+      "role": "Close",
+      "time": "09:00",
+      "timezone": "America/New_York",
+      "automation": "new-patterns-scan-fri",
+      "focus": "Week-close. Long-horizon leftovers. Ship, defer, or drop. Compact ≤10 lines of fuel for next Monday."
+    }
+  ],
+  "inForce": [
+    "AGENTS.md vs SKILL.md split (≤100 lines)",
+    "Persistent teammates / Grok Bot fleet",
+    "Context lifecycle admit → place → compact → recover → reuse → govern",
+    "Model routing grok-4.6 xhigh plan / grok-4.5 medium exec",
+    "Event bus subscribe → reason → publish",
+    "Compact at 48k; isolate skeptic threads",
+    "Arcly v2 is a required pack consumer"
   ],
   "consumers": [
     {
