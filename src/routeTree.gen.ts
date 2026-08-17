@@ -15,6 +15,7 @@ import { Route as CyclesRouteImport } from './routes/cycles'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as PackRouteImport } from './routes/pack'
+import { Route as PromptsRouteImport } from './routes/prompts'
 import { Route as RoutingRouteImport } from './routes/routing'
 import { Route as SpecRouteImport } from './routes/spec'
 import { Route as TeammatesRouteImport } from './routes/teammates'
@@ -51,6 +52,11 @@ const PackRoute = PackRouteImport.update({
   path: '/pack',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PromptsRoute = PromptsRouteImport.update({
+  id: '/prompts',
+  path: '/prompts',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RoutingRoute = RoutingRouteImport.update({
   id: '/routing',
   path: '/routing',
@@ -84,6 +90,7 @@ export interface FileRoutesByFullPath {
   '/events': typeof EventsRoute
   '/login': typeof LoginRoute
   '/pack': typeof PackRoute
+  '/prompts': typeof PromptsRoute
   '/routing': typeof RoutingRoute
   '/spec': typeof SpecRoute
   '/teammates': typeof TeammatesRoute
@@ -97,6 +104,7 @@ export interface FileRoutesByTo {
   '/events': typeof EventsRoute
   '/login': typeof LoginRoute
   '/pack': typeof PackRoute
+  '/prompts': typeof PromptsRoute
   '/routing': typeof RoutingRoute
   '/spec': typeof SpecRoute
   '/teammates': typeof TeammatesRoute
@@ -111,6 +119,7 @@ export interface FileRoutesById {
   '/events': typeof EventsRoute
   '/login': typeof LoginRoute
   '/pack': typeof PackRoute
+  '/prompts': typeof PromptsRoute
   '/routing': typeof RoutingRoute
   '/spec': typeof SpecRoute
   '/teammates': typeof TeammatesRoute
@@ -126,6 +135,7 @@ export interface FileRouteTypes {
     | '/events'
     | '/login'
     | '/pack'
+    | '/prompts'
     | '/routing'
     | '/spec'
     | '/teammates'
@@ -139,6 +149,7 @@ export interface FileRouteTypes {
     | '/events'
     | '/login'
     | '/pack'
+    | '/prompts'
     | '/routing'
     | '/spec'
     | '/teammates'
@@ -152,6 +163,7 @@ export interface FileRouteTypes {
     | '/events'
     | '/login'
     | '/pack'
+    | '/prompts'
     | '/routing'
     | '/spec'
     | '/teammates'
@@ -166,6 +178,7 @@ export interface RootRouteChildren {
   EventsRoute: typeof EventsRoute
   LoginRoute: typeof LoginRoute
   PackRoute: typeof PackRoute
+  PromptsRoute: typeof PromptsRoute
   RoutingRoute: typeof RoutingRoute
   SpecRoute: typeof SpecRoute
   TeammatesRoute: typeof TeammatesRoute
@@ -217,6 +230,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PackRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/prompts': {
+      id: '/prompts'
+      path: '/prompts'
+      fullPath: '/prompts'
+      preLoaderRoute: typeof PromptsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/routing': {
       id: '/routing'
       path: '/routing'
@@ -262,6 +282,7 @@ const rootRouteChildren: RootRouteChildren = {
   EventsRoute: EventsRoute,
   LoginRoute: LoginRoute,
   PackRoute: PackRoute,
+  PromptsRoute: PromptsRoute,
   RoutingRoute: RoutingRoute,
   SpecRoute: SpecRoute,
   TeammatesRoute: TeammatesRoute,

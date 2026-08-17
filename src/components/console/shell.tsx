@@ -5,6 +5,7 @@ import {
   BookOpen,
   Boxes,
   CalendarDays,
+  FileText,
   GitBranch,
   Radio,
   Route as RouteIcon,
@@ -24,6 +25,7 @@ const NAV = [
   { to: "/routing", label: "Routing", icon: RouteIcon },
   { to: "/events", label: "Events", icon: Radio },
   { to: "/cycles", label: "Cycles", icon: CalendarDays },
+  { to: "/prompts", label: "Prompts", icon: FileText },
   { to: "/pack", label: "Pack", icon: ShieldCheck },
 ] as const;
 
