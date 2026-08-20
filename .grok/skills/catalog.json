@@ -1,5 +1,5 @@
 {
-  "version": "2026-08-17.3",
+  "version": "2026-08-19.1",
   "cycle": "weekly-new-patterns",
   "status": "in-force",
   "required": true,
@@ -28,10 +28,17 @@
     "execModel": "grok-4.5",
     "execEffort": "medium",
     "compactAt": 48000,
-    "isolateSubagents": true
+    "isolateSubagents": true,
+    "thinAgentsThickSkills": true,
+    "skillSelfImprove": true
   },
   "rules": [
     "AGENTS.md is place (≤100 lines). SKILL.md is how.",
+    "Thin agents, thick skills: keep agent / GROK.md / AGENTS.md lean; put detailed process, taste, edge cases, examples, and preferences into SKILL.md files.",
+    "Every SKILL.md must include a Self-Improvement Loop section (review failures/workarounds after a run and propose durable skill updates).",
+    "Prefer skill chaining: when a sub-process is independently useful, make it its own skill and orchestrate via a parent skill rather than one monolithic skill.",
+    "Skills are company assets: versioned in GitHub, single source of truth, survive sessions and people; personal skills stay in a separate sandbox if needed.",
+    "Progressive disclosure: catalog and frontmatter carry name + short description only; load full SKILL.md body on demand.",
     "Teammates run on isolated VMs. Human is escalation only.",
     "Context is a lifecycle: admit → place → compact → recover → reuse → govern.",
     "Compact at 48k. Always before the 200k price band.",
@@ -46,7 +53,7 @@
       "time": "09:00",
       "timezone": "America/New_York",
       "automation": "new-patterns-scan-mon",
-      "focus": "Broad 7–14 day scan. Official Grok/xAI, routing, long-horizon, event-driven. Implement only if not already in this pack."
+      "focus": "Broad 7–14 day scan. Official Grok/xAI, routing, long-horizon, event-driven, skills/SOPs. Implement only if not already in this pack."
     },
     {
       "id": "wed",
@@ -55,7 +62,7 @@
       "time": "09:00",
       "timezone": "America/New_York",
       "automation": "new-patterns-scan-wed",
-      "focus": "Did Monday implement items land? Mid-week scan of skills/SOPs, context W/S/C/I, MCP and memory."
+      "focus": "Did Monday implement items land? Mid-week scan of skills/SOPs, context W/S/C/I, MCP and memory, skill chaining / self-improve."
     },
     {
       "id": "fri",
@@ -74,7 +81,11 @@
     "Model routing grok-4.6 xhigh plan / grok-4.5 medium exec",
     "Event bus subscribe → reason → publish",
     "Compact at 48k; isolate skeptic threads",
-    "Arcly v2 is a required pack consumer"
+    "Arcly v2 is a required pack consumer",
+    "Thin agents / thick skills (detailed process lives in SKILL.md)",
+    "Self-Improvement Loop required in every SKILL.md",
+    "Skill chaining preference for multi-step workflows",
+    "Skills as versioned company assets (GitHub single source of truth)"
   ],
   "fleet": [
     {
@@ -146,5 +157,10 @@
     "boot": "/agent-os/BOOT.md",
     "rawCatalog": "https://raw.githubusercontent.com/manhatton31-svg/agent-os-console/main/.grok/skills/catalog.json",
     "rawBoot": "https://raw.githubusercontent.com/manhatton31-svg/agent-os-console/main/public/agent-os/BOOT.md"
+  },
+  "source": {
+    "skillChaining": "Remy / Greg Isenberg video 2026-08-19 (youtu.be/xHsftiyT9pQ)",
+    "priorRemy": "Aug 9 2026 Agent OS Integration from earlier Remy video",
+    "harnessNote": "Microsoft Agent Framework Harness (Wed patterns scan) remains complementary runtime layer"
   }
 }
